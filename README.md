@@ -1,5 +1,6 @@
-1. cp .env.example .env
-2. npm install
-3. php artisan migrate
-4. php artisan db:seed
-5. composer run dev
+1. npm install
+2. cp .env.example .env
+3. cp database/database.example.sqlite database/database
+4. php artisan migrate
+5. php artisan db:seed
+6. composer run dev

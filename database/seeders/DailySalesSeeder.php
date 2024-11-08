@@ -23,10 +23,10 @@ class DailySalesSeeder extends Seeder
         $dates = [Carbon::parse('2024-11-06'), Carbon::parse('2024-11-07')];
 
         foreach ($dates as $date) {
-            DailySale::create(['theater_id' => $theater1->id, 'movie_id' => $movie1->id, 'date' => $date, 'sales' => 100]);
-            DailySale::create(['theater_id' => $theater1->id, 'movie_id' => $movie2->id, 'date' => $date, 'sales' => 150]);
-            DailySale::create(['theater_id' => $theater2->id, 'movie_id' => $movie1->id, 'date' => $date, 'sales' => 200]);
-            DailySale::create(['theater_id' => $theater2->id, 'movie_id' => $movie2->id, 'date' => $date, 'sales' => 250]);
+            DailySale::create(['theater_id' => $theater1->id, 'movie_id' => $movie1->id, 'date' => $date, 'sales' => rand(100, 900)]);
+            DailySale::create(['theater_id' => $theater1->id, 'movie_id' => $movie2->id, 'date' => $date, 'sales' => rand(100, 900)]);
+            DailySale::create(['theater_id' => $theater2->id, 'movie_id' => $movie1->id, 'date' => $date, 'sales' => rand(100, 900)]);
+            DailySale::create(['theater_id' => $theater2->id, 'movie_id' => $movie2->id, 'date' => $date, 'sales' => rand(100, 900)]);
         }
     }
 }
