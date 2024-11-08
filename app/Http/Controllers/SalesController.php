@@ -42,7 +42,7 @@ class SalesController extends Controller
             $randomMovie->save();
             $filmOfTheDay = $filmOfTheDayExisted ?? $randomMovie;
 
-            Movie::where('id', '!=', $randomMovie->id)->update(['film_of_the_day' => false]);
+            Movie::where('id', '!=', $randomMovie->id)->where('film_of_the_day', true)->update(['film_of_the_day' => false]);
         }
 
         if ($topTheater) {
