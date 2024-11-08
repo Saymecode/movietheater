@@ -19,6 +19,8 @@ class SalesController extends Controller
     {
         $request->validate([
             'date' => 'required|date_format:n/j/Y',
+        ], [
+            'date.date_format' => 'The date field must match the format MM/D/YYYY.',
         ]);
 
         $date = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
