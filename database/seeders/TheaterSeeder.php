@@ -12,7 +12,14 @@ class TheaterSeeder extends Seeder
      */
     public function run(): void
     {
-        Theater::create(['name' => 'Theater 1', 'location' => 'Location 1']);
-        Theater::create(['name' => 'Theater 2', 'location' => 'Location 2']);
+        Theater::create([
+            'name' => 'TCL Chinese Theatre',
+            'location' => 'Hollywood, Los Angeles, California'
+        ]);
+
+        Theater::create([
+            'name' => 'AMC Empire 25',
+            'location' => 'New York City, New York'
+        ]);
     }
 }
