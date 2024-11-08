@@ -15,41 +15,22 @@ class DailySalesSeeder extends Seeder
      */
     public function run(): void
     {
-        $theater1 = Theater::where('name', 'Theater 1')->first();
-        $theater2 = Theater::where('name', 'Theater 2')->first();
-        $movie1 = Movie::where('title', 'Movie 1')->first();
-        $movie2 = Movie::where('title', 'Movie 2')->first();
+        $theaters = Theater::all();
+        $movies = Movie::all();
 
         $dates = [Carbon::parse('2024-11-06'), Carbon::parse('2024-11-07')];
 
         foreach ($dates as $date) {
-            DailySale::create([
-                'theater_id' => $theater1->id,
-                'movie_id' => $movie1->id,
-                'date' => $date,
-                'sales' => rand(10000, 90000)
-            ]);
-
-            DailySale::create([
-                'theater_id' => $theater1->id,
-                'movie_id' => $movie2->id,
-                'date' => $date,
-                'sales' => rand(10000, 90000)
-            ]);
-
-            DailySale::create([
-                'theater_id' => $theater2->id,
-                'movie_id' => $movie1->id,
-                'date' => $date,
-                'sales' => rand(10000, 90000)
-            ]);
-
-            DailySale::create([
-                'theater_id' => $theater2->id,
-                'movie_id' => $movie2->id,
-                'date' => $date,
-                'sales' => rand(10000, 90000)
-            ]);
+            foreach ($theaters as $theater) {
+                foreach ($movies as $movie) {
+                    DailySale::create([
+                        'theater_id' => $theater->id,
+                        'movie_id' => $movie->id,
+                        'date' => $date,
+                        'sales' => rand(10000, 90000)
+                    ]);
+                }
+            }
         }
     }
 }

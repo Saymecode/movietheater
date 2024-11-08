@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DailySale;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -29,8 +30,25 @@ class SalesController extends Controller
             ->orderByDesc('total_sales')
             ->first();
 
+        $today = Carbon::today()->format('Y-m-d');
+        $filmOfTheDayExisted = Movie::where('film_of_the_day', true)->first();
+
+        if (!$filmOfTheDayExisted || $filmOfTheDayExisted->film_of_the_day_updated_date !== $today) {
+            $randomMovie = Movie::inRandomOrder()->first();
+            $randomMovie->film_of_the_day = true;
+            $randomMovie->film_of_the_day_updated_date = $today;
+            $randomMovie->save();
+            $filmOfTheDay = $filmOfTheDayExisted ?? $randomMovie;
+
+            Movie::where('id', '!=', $randomMovie->id)->update(['film_of_the_day' => false]);
+        }
+
         if ($topTheater) {
-            return view('sales.result', ['topTheater' => $topTheater, 'date' => $date]);
+            return view('sales.result', [
+                'topTheater' => $topTheater,
+                'date' => $date,
+                'filmOfTheDay' => $filmOfTheDayExisted ?? $filmOfTheDay,
+            ]);
         } else {
             return back()->withErrors(['date' => 'No sales data found for the given date.']);
         }
