@@ -45,14 +45,15 @@ class SalesController extends Controller
             Movie::where('id', '!=', $randomMovie->id)->where('film_of_the_day', true)->update(['film_of_the_day' => false]);
         }
 
-        if ($topTheater) {
-            return view('sales.result', [
-                'topTheater' => $topTheater,
-                'date' => $date,
-                'filmOfTheDay' => $filmOfTheDay,
-            ]);
-        } else {
+        if (!$topTheater) {
             return back()->withErrors(['date' => 'No sales data found for the given date.']);
+
         }
+
+        return view('sales.result', [
+            'topTheater' => $topTheater,
+            'date' => $date,
+            'filmOfTheDay' => $filmOfTheDay,
+        ]);
     }
 }
