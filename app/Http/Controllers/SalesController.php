@@ -40,7 +40,7 @@ class SalesController extends Controller
             $randomMovie->film_of_the_day = true;
             $randomMovie->film_of_the_day_updated_date = $today;
             $randomMovie->save();
-            $filmOfTheDay = $filmOfTheDayExisted ?? $randomMovie;
+            $filmOfTheDay = $randomMovie;
 
             Movie::where('id', '!=', $randomMovie->id)->where('film_of_the_day', true)->update(['film_of_the_day' => false]);
         }
@@ -49,7 +49,7 @@ class SalesController extends Controller
             return view('sales.result', [
                 'topTheater' => $topTheater,
                 'date' => $date,
-                'filmOfTheDay' => $filmOfTheDayExisted ?? $filmOfTheDay,
+                'filmOfTheDay' => $filmOfTheDay ?? $filmOfTheDayExisted,
             ]);
         } else {
             return back()->withErrors(['date' => 'No sales data found for the given date.']);
