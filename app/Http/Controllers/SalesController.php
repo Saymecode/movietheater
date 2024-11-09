@@ -33,9 +33,9 @@ class SalesController extends Controller
             ->first();
 
         $today = Carbon::today()->format('Y-m-d');
-        $filmOfTheDayExisted = Movie::where('film_of_the_day', true)->first();
+        $filmOfTheDay = Movie::where('film_of_the_day', true)->where('film_of_the_day_updated_date', $today)->first();
 
-        if (!$filmOfTheDayExisted || $filmOfTheDayExisted->film_of_the_day_updated_date !== $today) {
+        if (!$filmOfTheDay) {
             $randomMovie = Movie::inRandomOrder()->first();
             $randomMovie->film_of_the_day = true;
             $randomMovie->film_of_the_day_updated_date = $today;
@@ -49,7 +49,7 @@ class SalesController extends Controller
             return view('sales.result', [
                 'topTheater' => $topTheater,
                 'date' => $date,
-                'filmOfTheDay' => $filmOfTheDay ?? $filmOfTheDayExisted,
+                'filmOfTheDay' => $filmOfTheDay,
             ]);
         } else {
             return back()->withErrors(['date' => 'No sales data found for the given date.']);
